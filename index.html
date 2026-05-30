@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Karan Divakar – SEO Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #020508;
+  --surface: #060d14;
+  --card: #0a1520;
+  --border: rgba(0,200,255,0.15);
+  --cyan: #00c8ff;
+  --green: #00ff88;
+  --gold: #ffd700;
+  --red: #ff4060;
+  --white: #e8f4ff;
+  --muted: #4a7a9b;
+  --glow: 0 0 20px rgba(0,200,255,0.3);
+  --glow-green: 0 0 20px rgba(0,255,136,0.3);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: var(--bg); color: var(--white); font-family: 'Rajdhani', sans-serif; overflow-x: hidden; cursor: none; }
+.cursor { width: 12px; height: 12px; background: var(--cyan); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9999; transition: transform 0.1s; box-shadow: 0 0 15px var(--cyan); }
+.cursor-ring { width: 35px; height: 35px; border: 1px solid rgba(0,200,255,0.5); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9998; transition: all 0.15s ease; }
+body::before { content: ''; position: fixed; inset: 0; background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px); pointer-events: none; z-index: 100; }
+body::after { content: ''; position: fixed; inset: 0; background-image: linear-gradient(rgba(0,200,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0,200,255,0.03) 1px, transparent 1px); background-size: 50px 50px; pointer-events: none; z-index: 0; }
+.hero { position: relative; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 80px 60px; z-index: 1; overflow: hidden; }
+.hero-orb { position: absolute; width: 600px; height: 600px; border-radius: 50%; background: radial-gradient(circle, rgba(0,200,255,0.08) 0%, transparent 70%); top: -100px; right: -100px; animation: pulse 4s ease-in-out infinite; }
+.hero-orb2 { position: absolute; width: 400px; height: 400px; border-radius: 50%; background: radial-gradient(circle, rgba(0,255,136,0.06) 0%, transparent 70%); bottom: -50px; left: 100px; animation: pulse 6s ease-in-out infinite reverse; }
+@keyframes pulse { 0%,100%{transform:scale(1);} 50%{transform:scale(1.15);} }
+.badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(0,200,255,0.08); border: 1px solid rgba(0,200,255,0.3); color: var(--cyan); font-family: 'Space Mono', monospace; font-size: 11px; padding: 6px 16px; letter-spacing: 2px; margin-bottom: 30px; width: fit-content; }
+.badge::before { content: '▶'; font-size: 8px; }
+.hero-name { font-family: 'Orbitron', monospace; font-size: clamp(48px, 8vw, 90px); font-weight: 900; line-height: 0.9; letter-spacing: -2px; background: linear-gradient(135deg, #ffffff 0%, #00c8ff 50%, #00ff88 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 10px; }
+.hero-title { font-family: 'Space Mono', monospace; font-size: 14px; color: var(--cyan); letter-spacing: 4px; margin-bottom: 30px; opacity: 0.8; }
+.hero-desc { font-size: 18px; color: rgba(232,244,255,0.7); max-width: 600px; line-height: 1.6; font-weight: 300; margin-bottom: 50px; }
+.hero-stats { display: flex; gap: 40px; flex-wrap: wrap; }
+.hero-stat-num { font-family: 'Orbitron', monospace; font-size: 36px; font-weight: 900; color: var(--cyan); line-height: 1; }
+.hero-stat-num.green { color: var(--green); }
+.hero-stat-num.gold { color: var(--gold); }
+.hero-stat-label { font-size: 11px; color: var(--muted); letter-spacing: 2px; margin-top: 4px; }
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 500; padding: 20px 60px; display: flex; justify-content: space-between; align-items: center; background: rgba(2,5,8,0.8); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+.nav-logo { font-family: 'Orbitron', monospace; font-size: 14px; color: var(--cyan); letter-spacing: 3px; }
+.nav-links { display: flex; gap: 30px; list-style: none; }
+.nav-links a { color: var(--muted); text-decoration: none; font-size: 12px; letter-spacing: 2px; transition: color 0.3s; font-family: 'Space Mono', monospace; }
+.nav-links a:hover { color: var(--cyan); }
+section { position: relative; z-index: 1; padding: 100px 60px; }
+.section-label { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--cyan); letter-spacing: 4px; margin-bottom: 16px; opacity: 0.7; }
+.section-title { font-family: 'Orbitron', monospace; font-size: clamp(28px, 4vw, 48px); font-weight: 700; margin-bottom: 60px; color: var(--white); }
+.section-title span { color: var(--cyan); }
+.strategy-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-bottom: 2px; }
+.strategy-row2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px; }
+.strategy-card { background: var(--card); border: 1px solid var(--border); padding: 40px; position: relative; overflow: hidden; transition: all 0.4s; cursor: default; }
+.strategy-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--accent, var(--cyan)); transform: scaleX(0); transform-origin: left; transition: transform 0.4s; }
+.strategy-card:hover::before { transform: scaleX(1); }
+.strategy-card:hover { background: rgba(10,21,32,0.95); box-shadow: var(--glow); transform: translateY(-2px); }
+.strategy-card.green { --accent: var(--green); }
+.strategy-card.gold { --accent: var(--gold); }
+.card-icon { font-size: 36px; margin-bottom: 20px; display: block; }
+.card-tag { display: inline-block; font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 2px; padding: 3px 10px; border: 1px solid; margin-bottom: 16px; color: var(--accent, var(--cyan)); border-color: var(--accent, var(--cyan)); opacity: 0.8; }
+.card-title { font-family: 'Orbitron', monospace; font-size: 16px; font-weight: 700; margin-bottom: 12px; color: var(--white); }
+.card-desc { font-size: 14px; color: rgba(232,244,255,0.6); line-height: 1.7; font-weight: 300; }
+.card-items { margin-top: 16px; list-style: none; }
+.card-items li { font-size: 13px; color: var(--muted); padding: 4px 0; border-bottom: 1px solid rgba(0,200,255,0.05); display: flex; align-items: center; gap: 8px; }
+.card-items li::before { content: '→'; color: var(--accent, var(--cyan)); font-size: 10px; }
+.projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; }
+.project-card { background: var(--card); border: 1px solid var(--border); padding: 32px; position: relative; overflow: hidden; transition: all 0.4s; }
+.project-card:hover { border-color: rgba(0,200,255,0.4); box-shadow: var(--glow); }
+.project-url { font-family: 'Space Mono', monospace; font-size: 10px; color: var(--cyan); letter-spacing: 1px; margin-bottom: 16px; opacity: 0.7; }
+.project-name { font-family: 'Orbitron', monospace; font-size: 18px; font-weight: 700; margin-bottom: 20px; color: var(--white); }
+.project-metrics { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 20px; }
+.metric { background: rgba(0,200,255,0.04); border: 1px solid rgba(0,200,255,0.1); padding: 12px; }
+.metric-val { font-family: 'Orbitron', monospace; font-size: 20px; font-weight: 700; color: var(--cyan); line-height: 1; }
+.metric-val.green { color: var(--green); }
+.metric-val.gold { color: var(--gold); }
+.metric-label { font-size: 10px; color: var(--muted); letter-spacing: 1px; margin-top: 4px; }
+.project-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.tag { font-family: 'Space Mono', monospace; font-size: 9px; padding: 3px 8px; border: 1px solid rgba(0,200,255,0.2); color: var(--muted); letter-spacing: 1px; }
+.tag.active { border-color: rgba(0,255,136,0.4); color: var(--green); }
+.screenshots-section { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.screenshot-tabs { display: flex; gap: 0; margin-bottom: 40px; border-bottom: 1px solid var(--border); }
+.tab-btn { background: none; border: none; color: var(--muted); font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 2px; padding: 14px 24px; cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.3s; }
+.tab-btn:hover, .tab-btn.active { color: var(--cyan); border-bottom-color: var(--cyan); }
+.screenshot-panel { display: none; }
+.screenshot-panel.active { display: block; }
+.ss-frame { border: 1px solid var(--border); border-radius: 4px; overflow: hidden; position: relative; background: #f8f9fa; margin-bottom: 30px; }
+.ss-bar { background: #1a1a2e; padding: 10px 16px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+.ss-dots { display: flex; gap: 6px; }
+.ss-dot { width: 10px; height: 10px; border-radius: 50%; }
+.ss-dot:nth-child(1) { background: #ff5f57; }
+.ss-dot:nth-child(2) { background: #ffbd2e; }
+.ss-dot:nth-child(3) { background: #28ca41; }
+.ss-url { font-family: 'Space Mono', monospace; font-size: 10px; color: rgba(255,255,255,0.5); flex: 1; background: rgba(255,255,255,0.05); padding: 4px 12px; border-radius: 3px; }
+.semrush-panel { background: #fff; padding: 24px; color: #333; }
+.semrush-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid #eee; }
+.semrush-domain { font-size: 20px; font-weight: 700; color: #1a1a2e; }
+.semrush-metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: #eee; margin-bottom: 20px; }
+.sm-metric { background: white; padding: 20px 16px; }
+.sm-label { font-size: 11px; color: #888; margin-bottom: 6px; }
+.sm-val { font-size: 26px; font-weight: 700; color: #1171ef; line-height: 1; }
+.sm-change { font-size: 11px; margin-top: 4px; }
+.sm-change.pos { color: #2e7d32; }
+.sm-change.neg { color: #c62828; }
+.ai-section { background: #f8f0ff; border: 1px solid #e0c4ff; padding: 16px; margin-bottom: 16px; border-radius: 4px; }
+.ai-label { font-size: 11px; font-weight: 700; color: #7b2ff7; letter-spacing: 1px; margin-bottom: 12px; }
+.ai-metrics { display: flex; gap: 30px; }
+.ai-m { text-align: center; }
+.ai-m-val { font-size: 22px; font-weight: 700; color: #7b2ff7; }
+.ai-m-label { font-size: 10px; color: #666; }
+.analysis-box { background: rgba(0,200,255,0.04); border: 1px solid rgba(0,200,255,0.15); padding: 24px; margin-top: 24px; }
+.analysis-title { font-family: 'Orbitron', monospace; font-size: 14px; color: var(--cyan); margin-bottom: 16px; letter-spacing: 2px; }
+.analysis-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.a-item { border-left: 2px solid var(--cyan); padding-left: 12px; }
+.a-item.green { border-color: var(--green); }
+.a-item.gold { border-color: var(--gold); }
+.a-label { font-size: 10px; color: var(--muted); letter-spacing: 1px; margin-bottom: 4px; }
+.a-val { font-size: 16px; font-weight: 700; color: var(--white); }
+.skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+.skill-item { background: var(--card); border: 1px solid var(--border); padding: 20px; display: flex; align-items: center; gap: 14px; transition: all 0.3s; }
+.skill-item:hover { border-color: rgba(0,200,255,0.4); background: rgba(0,200,255,0.04); }
+.skill-icon { font-size: 24px; }
+.skill-name { font-size: 14px; font-weight: 600; color: var(--white); letter-spacing: 0.5px; }
+.timeline { position: relative; padding-left: 40px; }
+.timeline::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: linear-gradient(to bottom, var(--cyan), var(--green), transparent); }
+.timeline-item { position: relative; margin-bottom: 50px; padding: 30px; background: var(--card); border: 1px solid var(--border); }
+.timeline-item::before { content: ''; position: absolute; left: -47px; top: 30px; width: 14px; height: 14px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 12px var(--cyan); border: 2px solid var(--bg); }
+.timeline-company { font-family: 'Orbitron', monospace; font-size: 16px; font-weight: 700; color: var(--white); margin-bottom: 4px; }
+.timeline-role { color: var(--cyan); font-size: 13px; letter-spacing: 2px; margin-bottom: 4px; font-family: 'Space Mono', monospace; }
+.timeline-period { font-size: 12px; color: var(--muted); margin-bottom: 16px; font-family: 'Space Mono', monospace; }
+.timeline-desc { font-size: 14px; color: rgba(232,244,255,0.65); line-height: 1.8; }
+.contact-bar { background: var(--card); border: 1px solid var(--border); padding: 50px; display: flex; align-items: center; justify-content: space-between; gap: 30px; flex-wrap: wrap; }
+.contact-info { display: flex; flex-direction: column; gap: 8px; }
+.contact-item { display: flex; align-items: center; gap: 12px; font-family: 'Space Mono', monospace; font-size: 13px; color: var(--white); }
+.contact-item .ci-icon { color: var(--cyan); width: 20px; }
+.cta-btn { background: linear-gradient(135deg, rgba(0,200,255,0.15), rgba(0,255,136,0.1)); border: 1px solid var(--cyan); color: var(--cyan); font-family: 'Orbitron', monospace; font-size: 12px; letter-spacing: 3px; padding: 16px 40px; cursor: pointer; transition: all 0.3s; text-decoration: none; display: inline-block; }
+.cta-btn:hover { background: rgba(0,200,255,0.2); box-shadow: var(--glow); }
+.divider { height: 1px; background: linear-gradient(90deg, transparent, var(--cyan), var(--green), transparent); margin: 0 60px; opacity: 0.3; }
+.fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+.particles { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+.particle { position: absolute; width: 2px; height: 2px; background: var(--cyan); border-radius: 50%; opacity: 0; animation: float-up linear infinite; }
+@keyframes float-up { 0% { opacity: 0; transform: translateY(100vh) translateX(0); } 10% { opacity: 0.6; } 90% { opacity: 0.3; } 100% { opacity: 0; transform: translateY(-100px) translateX(var(--drift)); } }
+.progress-row { display: flex; align-items: center; gap: 16px; margin-bottom: 14px; }
+.progress-label { font-size: 13px; color: var(--white); width: 160px; flex-shrink: 0; }
+.progress-track { flex: 1; height: 4px; background: rgba(0,200,255,0.1); position: relative; overflow: hidden; }
+.progress-fill { height: 100%; background: linear-gradient(90deg, var(--cyan), var(--green)); width: 0; transition: width 1.5s cubic-bezier(0.4,0,0.2,1); box-shadow: 0 0 8px var(--cyan); }
+.progress-pct { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--cyan); width: 35px; text-align: right; }
+footer { padding: 30px 60px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); }
+.footer-text { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--muted); }
+@media (max-width: 768px) {
+  body { cursor: auto; }
+  .cursor, .cursor-ring { display: none; }
+  nav { padding: 14px 18px; }
+  .nav-links { display: none; }
+  .hero { padding: 100px 18px 60px; min-height: auto; }
+  .hero-name { font-size: clamp(38px, 12vw, 60px); }
+  .hero-title { font-size: 10px; letter-spacing: 2px; }
+  .hero-desc { font-size: 15px; }
+  .hero-stats { gap: 20px; }
+  .hero-stat-num { font-size: 26px; }
+  section { padding: 60px 18px; }
+  .strategy-grid { grid-template-columns: 1fr; }
+  .strategy-row2 { grid-template-columns: 1fr; }
+  .strategy-card { padding: 24px; }
+  .projects-grid { grid-template-columns: 1fr; }
+  .semrush-metrics { grid-template-columns: repeat(2, 1fr); }
+  .ai-metrics { flex-wrap: wrap; gap: 12px; }
+  .ai-m { min-width: 60px; }
+  .analysis-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .screenshot-tabs { overflow-x: auto; white-space: nowrap; -webkit-overflow-scrolling: touch; padding-bottom: 2px; }
+  .tab-btn { font-size: 9px; padding: 10px 14px; letter-spacing: 1px; }
+  .semrush-panel { padding: 14px; }
+  .sm-val { font-size: 18px; }
+  .contact-bar { padding: 24px; flex-direction: column; }
+  .contact-item { font-size: 11px; }
+  footer { padding: 20px 18px; flex-direction: column; gap: 8px; text-align: center; }
+  .divider { margin: 0 18px; }
+  .timeline { padding-left: 24px; }
+  .timeline-item::before { left: -31px; }
+  .skills-grid { grid-template-columns: repeat(2, 1fr); }
+  .progress-label { width: 120px; font-size: 11px; }
+  .section-title { font-size: clamp(22px, 6vw, 36px); margin-bottom: 30px; }
+}
+</style>
+</head>
+<body>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursor-ring"></div>
+<div class="particles" id="particles"></div>
+<nav>
+  <div class="nav-logo">KD // SEO</div>
+  <ul class="nav-links">
+    <li><a href="#strategy">STRATEGY</a></li>
+    <li><a href="#projects">PROJECTS</a></li>
+    <li><a href="#analytics">ANALYTICS</a></li>
+    <li><a href="#skills">SKILLS</a></li>
+    <li><a href="#contact">CONTACT</a></li>
+  </ul>
+</nav>
+<div class="hero">
+  <div class="hero-orb"></div>
+  <div class="hero-orb2"></div>
+  <div class="badge">SEO EXECUTIVE · 2.5+ YEARS · DELHI NCR</div>
+  <div class="hero-name">KARAN<br>DIVAKAR</div>
+  <div class="hero-title">// SEARCH ENGINE OPTIMIZATION SPECIALIST</div>
+  <p class="hero-desc">Driving organic growth through precision keyword targeting, authority link building, technical SEO mastery, and AI-era visibility strategies. From white hat excellence to grey hat edge plays — full-spectrum search dominance.</p>
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="hero-stat-num">2.5+</div><div class="hero-stat-label">YEARS EXP</div></div>
+    <div class="hero-stat"><div class="hero-stat-num green">10+</div><div class="hero-stat-label">PROJECTS</div></div>
+    <div class="hero-stat"><div class="hero-stat-num gold">8.3K</div><div class="hero-stat-label">KEYWORDS RANKED</div></div>
+    <div class="hero-stat"><div class="hero-stat-num" style="color:var(--red)">192K+</div><div class="hero-stat-label">PEAK TRAFFIC</div></div>
+  </div>
+</div>
+<div class="divider"></div>
+<section id="strategy">
+  <div class="section-label">// METHODOLOGY</div>
+  <div class="section-title">SEO <span>Arsenal</span></div>
+  <div class="strategy-grid fade-in">
+    <div class="strategy-card">
+      <span class="card-icon">🛡️</span>
+      <div class="card-tag">WHITE HAT</div>
+      <div class="card-title">Sustainable Growth SEO</div>
+      <p class="card-desc">Algorithm-proof strategies built on genuine value creation, E-E-A-T principles, and quality content that earns rankings for life.</p>
+      <ul class="card-items">
+        <li>E-E-A-T Content Optimization</li>
+        <li>Schema Markup & Structured Data</li>
+        <li>Core Web Vitals Optimization</li>
+        <li>Topical Authority Building</li>
+        <li>Natural Link Acquisition</li>
+        <li>Google Search Console Mastery</li>
+      </ul>
+    </div>
+    <div class="strategy-card green">
+      <span class="card-icon">⚡</span>
+      <div class="card-tag">GREY HAT</div>
+      <div class="card-title">Aggressive Edge Tactics</div>
+      <p class="card-desc">Strategic use of advanced techniques that operate in the nuanced space between guidelines — for clients who need results, fast.</p>
+      <ul class="card-items">
+        <li>PBN Strategy & Management</li>
+        <li>Expired Domain Leverage</li>
+        <li>Tiered Link Building Systems</li>
+        <li>SAPE & Sponsored Link Ops</li>
+        <li>Web 2.0 Network Building</li>
+        <li>Parasite SEO Deployment</li>
+      </ul>
+    </div>
+    <div class="strategy-card gold">
+      <span class="card-icon">🔗</span>
+      <div class="card-tag">BACKLINK GROWTH</div>
+      <div class="card-title">Authority Link Engineering</div>
+      <p class="card-desc">Systematic domain authority building through strategic backlink acquisition — transforming weak profiles into backlink fortresses.</p>
+      <ul class="card-items">
+        <li>HARO & Digital PR Outreach</li>
+        <li>Guest Posting Networks</li>
+        <li>Broken Link Reclamation</li>
+        <li>Resource Page Link Building</li>
+        <li>Competitor Backlink Hijacking</li>
+        <li>Contextual Link Insertion</li>
+      </ul>
+    </div>
+  </div>
+  <div class="strategy-row2 fade-in" style="margin-top:2px;">
+    <div class="strategy-card" style="--accent:#a78bfa">
+      <span class="card-icon">🌐</span>
+      <div class="card-tag" style="color:#a78bfa;border-color:#a78bfa;">GEO SEO</div>
+      <div class="card-title">Local & Geographic Targeting</div>
+      <p class="card-desc">Dominating geographic search results through hyper-local optimization, Google Business Profile mastery, and geo-targeted content clusters.</p>
+      <ul class="card-items">
+        <li>Google Business Profile Optimization</li>
+        <li>NAP Citation Building</li>
+        <li>Local Schema & Rich Snippets</li>
+        <li>Geo-Targeted Keyword Clusters</li>
+        <li>City/Region Landing Page Strategy</li>
+        <li>Local Pack Ranking Campaigns</li>
+      </ul>
+    </div>
+    <div class="strategy-card" style="--accent:#f97316">
+      <span class="card-icon">🤖</span>
+      <div class="card-tag" style="color:#f97316;border-color:#f97316;">AI SEO</div>
+      <div class="card-title">AI-Era Search Optimization</div>
+      <p class="card-desc">Pioneering optimization for the new AI search landscape — getting cited in ChatGPT, Google AI Overview, Gemini, and Perplexity.</p>
+      <ul class="card-items">
+        <li>AI Overview (SGE) Optimization</li>
+        <li>ChatGPT Citation Strategy</li>
+        <li>Gemini Visibility Campaigns</li>
+        <li>Conversational Query Targeting</li>
+        <li>LLMO (LLM Optimization)</li>
+        <li>Featured Snippet Domination</li>
+      </ul>
+    </div>
+  </div>
+</section>
+<div class="divider"></div>
+<section id="projects">
+  <div class="section-label">// LIVE RESULTS</div>
+  <div class="section-title">Client <span>Projects</span></div>
+  <div class="projects-grid fade-in">
+    <div class="project-card">
+      <div class="project-url">wallsanddreams.com</div>
+      <div class="project-name">Walls & Dreams</div>
+      <div class="project-metrics">
+        <div class="metric"><div class="metric-val">24.5K</div><div class="metric-label">ORGANIC TRAFFIC</div></div>
+        <div class="metric"><div class="metric-val green">8.3K</div><div class="metric-label">KEYWORDS +3.5%</div></div>
+        <div class="metric"><div class="metric-val gold">136</div><div class="metric-label">REF DOMAINS</div></div>
+        <div class="metric"><div class="metric-val" style="color:#a78bfa">16.2K</div><div class="metric-label">BACKLINKS</div></div>
+      </div>
+      <div style="margin-bottom:12px;"><div style="font-size:11px;color:var(--muted);margin-bottom:6px;font-family:'Space Mono',monospace;">AI VISIBILITY</div><div style="display:flex;gap:16px;font-size:12px;"><span style="color:#a78bfa;">AI Score: <strong>15</strong></span><span style="color:var(--cyan)">Mentions: <strong>68</strong></span><span style="color:var(--green)">Cited: <strong>283</strong></span></div></div>
+      <div class="project-tags"><span class="tag active">ACTIVE</span><span class="tag">ON-PAGE</span><span class="tag">LINK BUILD</span><span class="tag">CONTENT</span><span class="tag">AI SEO</span></div>
+    </div>
+    <div class="project-card">
+      <div class="project-url">outcasts.in</div>
+      <div class="project-name">Outcasts</div>
+      <div class="project-metrics">
+        <div class="metric"><div class="metric-val">192.3K</div><div class="metric-label">ORGANIC TRAFFIC</div></div>
+        <div class="metric"><div class="metric-val green">5K</div><div class="metric-label">KEYWORDS +0.7%</div></div>
+        <div class="metric"><div class="metric-val gold">541</div><div class="metric-label">REF DOMAINS</div></div>
+        <div class="metric"><div class="metric-val" style="color:#a78bfa">74.2K</div><div class="metric-label">BACKLINKS</div></div>
+      </div>
+      <div style="margin-bottom:12px;"><div style="font-size:11px;color:var(--muted);margin-bottom:6px;font-family:'Space Mono',monospace;">AUTHORITY SCORE: <span style="color:var(--cyan);font-weight:700;">33</span> | PAID: <span style="color:var(--green)">1.4K +63%</span></div></div>
+      <div class="project-tags"><span class="tag active">HIGH TRAFFIC</span><span class="tag">AUTH: 33</span><span class="tag">PAID SEO</span><span class="tag">SCALE</span></div>
+    </div>
+    <div class="project-card">
+      <div class="project-url">mangalmay.org</div>
+      <div class="project-name">Mangalmay Institute</div>
+      <div class="project-metrics">
+        <div class="metric"><div class="metric-val">112.9K</div><div class="metric-label">ORGANIC TRAFFIC</div></div>
+        <div class="metric"><div class="metric-val green">8.3K</div><div class="metric-label">KEYWORDS +8.4%</div></div>
+        <div class="metric"><div class="metric-val gold">2.1K</div><div class="metric-label">REF DOMAINS</div></div>
+        <div class="metric"><div class="metric-val" style="color:#a78bfa">72.6K</div><div class="metric-label">BACKLINKS</div></div>
+      </div>
+      <div style="margin-bottom:12px;"><div style="font-size:11px;color:var(--muted);margin-bottom:6px;font-family:'Space Mono',monospace;">AUTHORITY SCORE: <span style="color:var(--gold);font-weight:700;">40 — VERY GOOD</span></div><div style="font-size:12px;color:#a78bfa;">AI Visibility: 32 | Mentions: 123 | Cited: 216</div></div>
+      <div class="project-tags"><span class="tag active">EDU SECTOR</span><span class="tag">AUTH: 40</span><span class="tag">AI CITED</span><span class="tag">GEO LOCAL</span></div>
+    </div>
+    <div class="project-card">
+      <div class="project-url">dynmclife.com</div>
+      <div class="project-name">Dynmclife</div>
+      <div class="project-metrics">
+        <div class="metric"><div class="metric-val">Growing</div><div class="metric-label">TRAFFIC</div></div>
+        <div class="metric"><div class="metric-val green">↑</div><div class="metric-label">RANKINGS</div></div>
+        <div class="metric"><div class="metric-val gold">Built</div><div class="metric-label">AUTHORITY</div></div>
+        <div class="metric"><div class="metric-val" style="color:#a78bfa">Links</div><div class="metric-label">BACKLINKS</div></div>
+      </div>
+      <div class="project-tags"><span class="tag active">ACTIVE</span><span class="tag">CONTENT</span><span class="tag">ON-PAGE</span><span class="tag">LINK BUILD</span></div>
+    </div>
+    <div class="project-card">
+      <div class="project-url">kapoorwatch.com</div>
+      <div class="project-name">Kapoor Watch</div>
+      <div class="project-metrics">
+        <div class="metric"><div class="metric-val">160.2K</div><div class="metric-label">ORGANIC TRAFFIC +21%</div></div>
+        <div class="metric"><div class="metric-val green">39.6K</div><div class="metric-label">KEYWORDS</div></div>
+        <div class="metric"><div class="metric-val gold">1.8K</div><div class="metric-label">REF DOMAINS</div></div>
+        <div class="metric"><div class="metric-val" style="color:#a78bfa">58.1K</div><div class="metric-label">BACKLINKS</div></div>
+      </div>
+      <div style="margin-bottom:12px;">
+        <div style="font-size:11px;color:var(--muted);margin-bottom:6px;font-family:'Space Mono',monospace;">AUTHORITY SCORE: <span style="color:var(--gold);font-weight:700;">41 — VERY GOOD</span> | PAID: <span style="color:var(--green)">10.6K +36%</span></div>
+        <div style="font-size:12px;color:#a78bfa;">AI Visibility: 39 | Mentions: 1.4K | Cited: 2.4K</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:4px;">Watch showcase & brand discovery site — not direct selling</div>
+      </div>
+      <div class="project-tags"><span class="tag active">WATCH BRAND</span><span class="tag">AUTH: 41</span><span class="tag">AI CITED</span><span class="tag">GEO LOCAL</span><span class="tag">BRAND SEO</span></div>
+    </div>
+    <div class="project-card">
+      <div class="project-url">webspidersolutions.com</div>
+      <div class="project-name">WebSpider Solutions</div>
+      <div class="project-metrics">
+        <div class="metric"><div class="metric-val">Agency</div><div class="metric-label">TYPE</div></div>
+        <div class="metric"><div class="metric-val green">Multi</div><div class="metric-label">CLIENT SEO</div></div>
+        <div class="metric"><div class="metric-val gold">Full</div><div class="metric-label">AUDIT+STRATEGY</div></div>
+        <div class="metric"><div class="metric-val" style="color:#a78bfa">Reports</div><div class="metric-label">MONTHLY</div></div>
+      </div>
+      <div class="project-tags"><span class="tag active">CURRENT EMPLOYER</span><span class="tag">MULTI-CLIENT</span><span class="tag">FULL SEO</span></div>
+    </div>
+  </div>
+</section>
+<div class="divider"></div>
+<section id="analytics" class="screenshots-section">
+  <div class="section-label">// SEMRUSH DATA</div>
+  <div class="section-title">Live <span>Analytics</span></div>
+  <div class="screenshot-tabs">
+    <button class="tab-btn active" onclick="switchTab('wd',event)">wallsanddreams.com</button>
+    <button class="tab-btn" onclick="switchTab('oc',event)">outcasts.in</button>
+    <button class="tab-btn" onclick="switchTab('mm',event)">mangalmay.org</button>
+    <button class="tab-btn" onclick="switchTab('kw',event)">kapoorwatch.com</button>
+  </div>
+  <div class="screenshot-panel active" id="tab-wd">
+    <div class="ss-frame">
+      <div class="ss-bar"><div class="ss-dots"><div class="ss-dot"></div><div class="ss-dot"></div><div class="ss-dot"></div></div><div class="ss-url">semrush.com › analytics › overview › wallsanddreams.com</div></div>
+      <div class="semrush-panel">
+        <div class="semrush-header"><div><div style="font-size:13px;color:#666;margin-bottom:4px;">Domain Overview</div><div class="semrush-domain">wallsanddreams.com ↗</div></div><div style="margin-left:auto;font-size:11px;color:#888;">May 23, 2026 · Worldwide · Desktop</div></div>
+        <div class="ai-section"><div class="ai-label">✦ AI SEARCH</div><div class="ai-metrics"><div class="ai-m"><div class="ai-m-val">15</div><div class="ai-m-label">AI Visibility</div></div><div class="ai-m"><div class="ai-m-val">68</div><div class="ai-m-label">Mentions</div></div><div class="ai-m"><div class="ai-m-val">283</div><div class="ai-m-label">Cited Pages</div></div><div class="ai-m" style="text-align:left;padding-left:20px;border-left:1px solid #e0c4ff;"><div style="font-size:11px;color:#666;margin-bottom:6px;">Breakdown</div><div style="font-size:11px;">ChatGPT: 0 / 137</div><div style="font-size:11px;">AI Overview: 14 / 92</div><div style="font-size:11px;">AI Mode: 38 / 83</div><div style="font-size:11px;">Gemini: 16 / 40</div></div></div></div>
+        <div class="semrush-metrics"><div class="sm-metric"><div class="sm-label">Authority Score</div><div class="sm-val">23</div><div style="font-size:11px;color:#1171ef;margin-top:4px;">High traffic to...</div></div><div class="sm-metric"><div class="sm-label">Organic Traffic</div><div class="sm-val">24.5K</div><div class="sm-change neg">-4.4%</div></div><div class="sm-metric"><div class="sm-label">Organic Keywords</div><div class="sm-val">8.3K</div><div class="sm-change pos">+3.5%</div></div><div class="sm-metric"><div class="sm-label">Backlinks</div><div class="sm-val">16.2K</div><div class="sm-change pos">↑</div></div></div>
+        <div class="semrush-metrics"><div class="sm-metric"><div class="sm-label">Traffic Share 🇺🇸</div><div class="sm-val" style="color:#f57c00">7%</div></div><div class="sm-metric"><div class="sm-label">Ref. Domains</div><div class="sm-val">136</div></div><div class="sm-metric"><div class="sm-label">Paid Traffic</div><div class="sm-val" style="color:#999">0</div></div><div class="sm-metric"><div class="sm-label">Paid Keywords</div><div class="sm-val" style="color:#999">0</div></div></div>
+      </div>
+    </div>
+    <div class="analysis-box"><div class="analysis-title">// STRATEGY DEPLOYED</div><div class="analysis-grid"><div class="a-item green"><div class="a-label">KEYWORD GROWTH</div><div class="a-val">8.3K +3.5%</div></div><div class="a-item"><div class="a-label">BACKLINK PROFILE</div><div class="a-val">16.2K Links Built</div></div><div class="a-item gold"><div class="a-label">AI CITATIONS</div><div class="a-val">283 Pages Cited</div></div><div class="a-item"><div class="a-label">TACTICS USED</div><div class="a-val">On-Page + Link Build</div></div><div class="a-item green"><div class="a-label">AI MENTIONS</div><div class="a-val">68 AI Mentions</div></div><div class="a-item" style="border-color:#a78bfa"><div class="a-label">GEMINI CITATIONS</div><div class="a-val">16 Mentions / 40 Pages</div></div></div></div>
+  </div>
+  <div class="screenshot-panel" id="tab-oc">
+    <div class="ss-frame">
+      <div class="ss-bar"><div class="ss-dots"><div class="ss-dot"></div><div class="ss-dot"></div><div class="ss-dot"></div></div><div class="ss-url">semrush.com › analytics › overview › outcasts.in</div></div>
+      <div class="semrush-panel">
+        <div class="semrush-header"><div><div style="font-size:13px;color:#666;margin-bottom:4px;">Domain Overview</div><div class="semrush-domain">outcasts.in ↗</div></div><div style="margin-left:auto;font-size:11px;color:#888;">May 23, 2026 · Worldwide · Desktop</div></div>
+        <div class="ai-section"><div class="ai-label">✦ AI SEARCH</div><div class="ai-metrics"><div class="ai-m"><div class="ai-m-val">15</div><div class="ai-m-label">AI Visibility</div></div><div class="ai-m"><div class="ai-m-val">24</div><div class="ai-m-label">Mentions</div></div><div class="ai-m"><div class="ai-m-val">52</div><div class="ai-m-label">Cited Pages</div></div><div class="ai-m" style="text-align:left;padding-left:20px;border-left:1px solid #e0c4ff;"><div style="font-size:11px;color:#666;margin-bottom:6px;">Breakdown</div><div style="font-size:11px;">ChatGPT: 1 / 16</div><div style="font-size:11px;">AI Overview: 5 / 14</div><div style="font-size:11px;">AI Mode: 15 / 23</div><div style="font-size:11px;">Gemini: 3 / 5</div></div></div></div>
+        <div class="semrush-metrics"><div class="sm-metric"><div class="sm-label">Authority Score</div><div class="sm-val">33</div><div style="font-size:11px;color:#1171ef;margin-top:4px;">High traffic to...</div></div><div class="sm-metric"><div class="sm-label">Organic Traffic</div><div class="sm-val">192.3K</div><div class="sm-change neg">-1.7%</div></div><div class="sm-metric"><div class="sm-label">Organic Keywords</div><div class="sm-val">5K</div><div class="sm-change pos">+0.7%</div></div><div class="sm-metric"><div class="sm-label">Backlinks</div><div class="sm-val">74.2K</div></div></div>
+        <div class="semrush-metrics"><div class="sm-metric"><div class="sm-label">Paid Traffic</div><div class="sm-val">1.4K</div><div class="sm-change pos">+63%</div></div><div class="sm-metric"><div class="sm-label">Ref. Domains</div><div class="sm-val">541</div></div><div class="sm-metric"><div class="sm-label">Traffic Share 🇺🇸</div><div class="sm-val" style="color:#f57c00">0%</div></div><div class="sm-metric"><div class="sm-label">Paid Keywords</div><div class="sm-val">2</div></div></div>
+      </div>
+    </div>
+    <div class="analysis-box"><div class="analysis-title">// BREAKTHROUGH METRICS</div><div class="analysis-grid"><div class="a-item green"><div class="a-label">MASSIVE TRAFFIC</div><div class="a-val">192.3K Organic</div></div><div class="a-item gold"><div class="a-label">BACKLINK DOMINANCE</div><div class="a-val">74.2K Total Links</div></div><div class="a-item"><div class="a-label">REF DOMAINS</div><div class="a-val">541 Unique Domains</div></div><div class="a-item green"><div class="a-label">PAID TRAFFIC GROWTH</div><div class="a-val">+63% Paid Uplift</div></div><div class="a-item"><div class="a-label">AUTHORITY SCORE</div><div class="a-val">33 — Strong</div></div><div class="a-item gold"><div class="a-label">SCALE ACHIEVED</div><div class="a-val">Highest Traffic Client</div></div></div></div>
+  </div>
+  <div class="screenshot-panel" id="tab-mm">
+    <div class="ss-frame">
+      <div class="ss-bar"><div class="ss-dots"><div class="ss-dot"></div><div class="ss-dot"></div><div class="ss-dot"></div></div><div class="ss-url">semrush.com › analytics › overview › mangalmay.org</div></div>
+      <div class="semrush-panel">
+        <div class="semrush-header"><div><div style="font-size:13px;color:#666;margin-bottom:4px;">Domain Overview</div><div class="semrush-domain">mangalmay.org ↗</div></div><div style="margin-left:auto;font-size:11px;color:#888;">May 23, 2026 · Worldwide · Desktop</div></div>
+        <div class="ai-section"><div class="ai-label">✦ AI SEARCH</div><div class="ai-metrics"><div class="ai-m"><div class="ai-m-val">32</div><div class="ai-m-label">AI Visibility</div></div><div class="ai-m"><div class="ai-m-val">123</div><div class="ai-m-label">Mentions</div></div><div class="ai-m"><div class="ai-m-val">216</div><div class="ai-m-label">Cited Pages</div></div><div class="ai-m" style="text-align:left;padding-left:20px;border-left:1px solid #e0c4ff;"><div style="font-size:11px;color:#666;margin-bottom:6px;">Breakdown</div><div style="font-size:11px;">ChatGPT: 11 / 38</div><div style="font-size:11px;">AI Overview: 79 / 119</div><div style="font-size:11px;">AI Mode: 22 / 138</div><div style="font-size:11px;">Gemini: 11 / 41</div></div></div></div>
+        <div class="semrush-metrics"><div class="sm-metric"><div class="sm-label">Authority Score</div><div class="sm-val">40</div><div style="font-size:11px;color:#2e7d32;margin-top:4px;">Very good</div></div><div class="sm-metric"><div class="sm-label">Organic Traffic</div><div class="sm-val">112.9K</div><div class="sm-change neg">-29%</div></div><div class="sm-metric"><div class="sm-label">Organic Keywords</div><div class="sm-val">8.3K</div><div class="sm-change pos">+8.4%</div></div><div class="sm-metric"><div class="sm-label">Backlinks</div><div class="sm-val">72.6K</div></div></div>
+        <div class="semrush-metrics"><div class="sm-metric"><div class="sm-label">Traffic Share 🇺🇸</div><div class="sm-val" style="color:#f57c00">7%</div></div><div class="sm-metric"><div class="sm-label">Ref. Domains</div><div class="sm-val">2.1K</div></div><div class="sm-metric"><div class="sm-label">Paid Traffic</div><div class="sm-val">1</div></div><div class="sm-metric"><div class="sm-label">Paid Keywords</div><div class="sm-val">1</div></div></div>
+      </div>
+    </div>
+    <div class="analysis-box"><div class="analysis-title">// EDU SECTOR DOMINATION</div><div class="analysis-grid"><div class="a-item gold"><div class="a-label">TOP AUTHORITY SCORE</div><div class="a-val">40 — Very Good</div></div><div class="a-item green"><div class="a-label">KEYWORD GROWTH</div><div class="a-val">8.3K +8.4%</div></div><div class="a-item"><div class="a-label">MASSIVE BACKLINKS</div><div class="a-val">72.6K Total</div></div><div class="a-item" style="border-color:#a78bfa"><div class="a-label">AI VISIBILITY LEADER</div><div class="a-val">Score: 32 of 100</div></div><div class="a-item green"><div class="a-label">AI OVERVIEW CITATIONS</div><div class="a-val">79 Mentions / 119 Pages</div></div><div class="a-item gold"><div class="a-label">REF DOMAINS</div><div class="a-val">2.1K Linking Domains</div></div></div></div>
+  </div>
+
+  <!-- KAPOOR WATCH -->
+  <div class="screenshot-panel" id="tab-kw">
+    <div class="ss-frame">
+      <div class="ss-bar"><div class="ss-dots"><div class="ss-dot"></div><div class="ss-dot"></div><div class="ss-dot"></div></div><div class="ss-url">semrush.com › analytics › overview › kapoorwatch.com</div></div>
+      <div class="semrush-panel">
+        <div class="semrush-header"><div><div style="font-size:13px;color:#666;margin-bottom:4px;">Domain Overview</div><div class="semrush-domain">kapoorwatch.com ↗</div></div><div style="margin-left:auto;font-size:11px;color:#888;">May 23, 2026 · Worldwide · Desktop</div></div>
+        <div class="ai-section">
+          <div class="ai-label">✦ AI SEARCH — HIGHEST AI SCORE ACROSS ALL PROJECTS</div>
+          <div class="ai-metrics">
+            <div class="ai-m"><div class="ai-m-val">39</div><div class="ai-m-label">AI Visibility</div></div>
+            <div class="ai-m"><div class="ai-m-val">1.4K</div><div class="ai-m-label">Mentions</div></div>
+            <div class="ai-m"><div class="ai-m-val">2.4K</div><div class="ai-m-label">Cited Pages</div></div>
+            <div class="ai-m" style="text-align:left;padding-left:20px;border-left:1px solid #e0c4ff;"><div style="font-size:11px;color:#666;margin-bottom:6px;">Breakdown</div><div style="font-size:11px;">ChatGPT: 164 / 874</div><div style="font-size:11px;">AI Overview: 203 / 416</div><div style="font-size:11px;">AI Mode: 292 / 1.4K</div><div style="font-size:11px;">Gemini: 765 / 342</div></div>
+          </div>
+        </div>
+        <div class="semrush-metrics">
+          <div class="sm-metric"><div class="sm-label">Authority Score</div><div class="sm-val">41</div><div style="font-size:11px;color:#2e7d32;margin-top:4px;">Very good</div></div>
+          <div class="sm-metric"><div class="sm-label">Organic Traffic</div><div class="sm-val">160.2K</div><div class="sm-change pos">+21%</div></div>
+          <div class="sm-metric"><div class="sm-label">Organic Keywords</div><div class="sm-val">39.6K</div><div class="sm-change neg">-0.4%</div></div>
+          <div class="sm-metric"><div class="sm-label">Backlinks</div><div class="sm-val">58.1K</div></div>
+        </div>
+        <div class="semrush-metrics">
+          <div class="sm-metric"><div class="sm-label">Paid Traffic</div><div class="sm-val">10.6K</div><div class="sm-change pos">+36%</div></div>
+          <div class="sm-metric"><div class="sm-label">Ref. Domains</div><div class="sm-val">1.8K</div></div>
+          <div class="sm-metric"><div class="sm-label">Traffic Share 🇺🇸</div><div class="sm-val" style="color:#f57c00">8%</div></div>
+          <div class="sm-metric"><div class="sm-label">Paid Keywords</div><div class="sm-val">38</div><div class="sm-change neg">-2.6%</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="analysis-box">
+      <div class="analysis-title">// BRAND DISCOVERY POWERHOUSE</div>
+      <div class="analysis-grid">
+        <div class="a-item gold"><div class="a-label">AUTHORITY SCORE</div><div class="a-val">41 — Very Good</div></div>
+        <div class="a-item green"><div class="a-label">TRAFFIC GROWTH</div><div class="a-val">160.2K (+21%)</div></div>
+        <div class="a-item" style="border-color:#f97316"><div class="a-label">PAID TRAFFIC SURGE</div><div class="a-val">10.6K (+36%)</div></div>
+        <div class="a-item" style="border-color:#a78bfa"><div class="a-label">TOP AI VISIBILITY</div><div class="a-val">Score 39 — #1 of All Projects</div></div>
+        <div class="a-item green"><div class="a-label">GEMINI DOMINANCE</div><div class="a-val">765 Mentions / 342 Pages</div></div>
+        <div class="a-item gold"><div class="a-label">KEYWORD BASE</div><div class="a-val">39.6K Organic Keywords</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="divider"></div>
+<section id="skills">
+  <div class="section-label">// TOOLKIT</div>
+  <div class="section-title">Skills & <span>Tools</span></div>
+  <div style="margin-bottom:50px;" class="fade-in">
+    <div class="progress-row"><div class="progress-label">Keyword Research</div><div class="progress-track"><div class="progress-fill" data-pct="95"></div></div><div class="progress-pct">95%</div></div>
+    <div class="progress-row"><div class="progress-label">On-Page SEO</div><div class="progress-track"><div class="progress-fill" data-pct="92"></div></div><div class="progress-pct">92%</div></div>
+    <div class="progress-row"><div class="progress-label">Link Building</div><div class="progress-track"><div class="progress-fill" data-pct="90"></div></div><div class="progress-pct">90%</div></div>
+    <div class="progress-row"><div class="progress-label">Technical SEO</div><div class="progress-track"><div class="progress-fill" data-pct="85"></div></div><div class="progress-pct">85%</div></div>
+    <div class="progress-row"><div class="progress-label">SEMrush / Ahrefs</div><div class="progress-track"><div class="progress-fill" data-pct="93"></div></div><div class="progress-pct">93%</div></div>
+    <div class="progress-row"><div class="progress-label">Google Analytics</div><div class="progress-track"><div class="progress-fill" data-pct="88"></div></div><div class="progress-pct">88%</div></div>
+    <div class="progress-row"><div class="progress-label">Content Optimization</div><div class="progress-track"><div class="progress-fill" data-pct="87"></div></div><div class="progress-pct">87%</div></div>
+    <div class="progress-row"><div class="progress-label">AI Search (LLMO)</div><div class="progress-track"><div class="progress-fill" data-pct="80"></div></div><div class="progress-pct">80%</div></div>
+  </div>
+  <div class="skills-grid fade-in">
+    <div class="skill-item"><div class="skill-icon">📊</div><div class="skill-name">Google Analytics</div></div>
+    <div class="skill-item"><div class="skill-icon">🔍</div><div class="skill-name">Search Console</div></div>
+    <div class="skill-item"><div class="skill-icon">⚡</div><div class="skill-name">SEMrush</div></div>
+    <div class="skill-item"><div class="skill-icon">🎯</div><div class="skill-name">Ahrefs</div></div>
+    <div class="skill-item"><div class="skill-icon">🔑</div><div class="skill-name">Keyword Research</div></div>
+    <div class="skill-item"><div class="skill-icon">⚙️</div><div class="skill-name">Technical SEO</div></div>
+    <div class="skill-item"><div class="skill-icon">✍️</div><div class="skill-name">Content Optimization</div></div>
+    <div class="skill-item"><div class="skill-icon">🔗</div><div class="skill-name">Link Building</div></div>
+    <div class="skill-item"><div class="skill-icon">📍</div><div class="skill-name">Local / Geo SEO</div></div>
+    <div class="skill-item"><div class="skill-icon">🤖</div><div class="skill-name">AI SEO / LLMO</div></div>
+  </div>
+</section>
+<div class="divider"></div>
+<section id="experience">
+  <div class="section-label">// WORK HISTORY</div>
+  <div class="section-title">Experience <span>Timeline</span></div>
+  <div class="timeline fade-in">
+    <div class="timeline-item">
+      <div class="timeline-company">WebSpider Solutions</div>
+      <div class="timeline-role">SEO EXECUTIVE</div>
+      <div class="timeline-period">December 2024 → Present · Noida, UP</div>
+      <div class="timeline-desc">Conducting comprehensive SEO audits identifying ranking opportunities across multiple client verticals. Managing off-page SEO operations including link building outreach, content distribution, and domain authority development. Implementing on-page strategies — meta optimization, header restructuring, content architecture. Generating monthly performance reports with actionable insights using Google Analytics and SEMrush.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-company">Digital Hikes</div>
+      <div class="timeline-role">SEO EXECUTIVE</div>
+      <div class="timeline-period">July 2023 → August 2024 · Rohini, Delhi</div>
+      <div class="timeline-desc">Conducted keyword research using Google Keyword Planner, SEMrush, and Ahrefs — identifying high-traffic, low-competition opportunities. Supported content teams with SEO-friendly topic research and optimization. Built high-quality backlinks via outreach and guest post submissions. Implemented structured internal linking systems improving crawlability and user navigation.</div>
+    </div>
+  </div>
+</section>
+<div class="divider"></div>
+<section id="contact" style="padding-bottom:60px;">
+  <div class="section-label">// GET IN TOUCH</div>
+  <div class="section-title">Let's <span>Connect</span></div>
+  <div class="contact-bar fade-in">
+    <div class="contact-info">
+      <div class="contact-item"><span class="ci-icon">✉</span><span>Divakarkaran779@gmail.com</span></div>
+      <div class="contact-item"><span class="ci-icon">📱</span><span>+91 7303352336</span></div>
+      <div class="contact-item"><span class="ci-icon">📍</span><span>Karawal Nagar, Shiv Vihar, Delhi – 110094</span></div>
+      <div class="contact-item"><span class="ci-icon">🎓</span><span>MA Student · Satyawati College · 2026</span></div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px;">
+      <a href="mailto:Divakarkaran779@gmail.com" class="cta-btn">HIRE ME</a>
+      <a href="tel:7303352336" class="cta-btn" style="color:var(--green);border-color:var(--green);background:linear-gradient(135deg,rgba(0,255,136,0.1),rgba(0,200,255,0.05));">CALL NOW</a>
+    </div>
+  </div>
+</section>
+<footer>
+  <div class="footer-text">© 2026 KARAN DIVAKAR · SEO EXECUTIVE</div>
+  <div class="footer-text">DELHI NCR · AVAILABLE FOR OPPORTUNITIES</div>
+</footer>
+<script>
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursor-ring');
+document.addEventListener('mousemove', e => {
+  cursor.style.left = e.clientX - 6 + 'px';
+  cursor.style.top = e.clientY - 6 + 'px';
+  ring.style.left = e.clientX - 17 + 'px';
+  ring.style.top = e.clientY - 17 + 'px';
+});
+document.querySelectorAll('a, button').forEach(el => {
+  el.addEventListener('mouseenter', () => { cursor.style.transform = 'scale(2)'; });
+  el.addEventListener('mouseleave', () => { cursor.style.transform = 'scale(1)'; });
+});
+const pc = document.getElementById('particles');
+for (let i = 0; i < 25; i++) {
+  const p = document.createElement('div');
+  p.className = 'particle';
+  p.style.left = Math.random() * 100 + 'vw';
+  p.style.setProperty('--drift', (Math.random() - 0.5) * 100 + 'px');
+  p.style.animationDuration = (Math.random() * 15 + 10) + 's';
+  p.style.animationDelay = (Math.random() * 15) + 's';
+  if (Math.random() > 0.6) p.style.background = '#00ff88';
+  pc.appendChild(p);
+}
+function switchTab(id, e) {
+  document.querySelectorAll('.screenshot-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  e.target.classList.add('active');
+}
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+const progressObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.querySelectorAll('.progress-fill').forEach(fill => { fill.style.width = fill.dataset.pct + '%'; });
+    }
+  });
+}, { threshold: 0.2 });
+document.querySelectorAll('.fade-in').forEach(el => progressObserver.observe(el));
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    document.querySelector(a.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+</script>
+</body>
+</html>
